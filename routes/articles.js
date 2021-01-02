@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const validator = require('validator');
 const { celebrate, Joi } = require('celebrate');
 const {
   getAllArticles, createArticle, deleteArticle,
@@ -19,8 +20,18 @@ router.post('/articles', celebrate({
     text: Joi.string().required(),
     date: Joi.string().required(),
     source: Joi.string().required(),
-    link: Joi.string().required().pattern(new RegExp(/https?:\/\/(www\.)?[-0-9/a-z()@:%.+~#=_]+\.{1}[a-z0-9]+\b[//a-z0-9()@:%_+.~#?&=]*/mi)),
-    image: Joi.string().required().pattern(new RegExp(/https?:\/\/(www\.)?[-0-9/a-z()@:%.+~#=_]+\.{1}[a-z0-9]+\b[//a-z0-9()@:%_+.~#?&=]*/mi)),
+    link: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Некорректная ссылка статьи');
+    }),
+    image: Joi.string().required().custom((value, helpers) => {
+      if (validator.isURL(value)) {
+        return value;
+      }
+      return helpers.message('Некорректная ссылка для аватарки');
+    }),
   }),
 }), createArticle);
 

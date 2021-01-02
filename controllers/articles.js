@@ -4,7 +4,7 @@ const ForbiddenError = require('../errors/forbidden-error');
 const NotFoundError = require('../errors/not-found-error');
 
 const getAllArticles = (req, res, next) => Article.find({ owner: req.user._id })
-  .then((articles) => res.status(200).send(articles))
+  .then((articles) => res.send(articles))
   .catch((err) => {
     if (err.name === 'CastError') {
       next(new BadRequestError('Произошла ошибка запроса.'));
@@ -35,8 +35,8 @@ const deleteArticle = (req, res, next) => {
       if (JSON.stringify(req.user._id) !== JSON.stringify(article.owner)) {
         throw new ForbiddenError('У Вас недостаточно прав для выполнения этой операции');
       }
-      return Article.findByIdAndRemove(req.params.id)
-        .then((removeArticle) => res.status(200).send(removeArticle));
+      article.remove();
+      return res.send(article);
     })
     .catch((err) => {
       if (err.name === 'TypeError') {

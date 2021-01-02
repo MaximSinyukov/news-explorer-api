@@ -27,13 +27,13 @@ const login = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      res.status(200).send({ token });
+      res.send({ token });
     })
     .catch(next);
 };
 
 const getUserById = (req, res, next) => User.findById(req.user._id)
-  .then((user) => res.status(200).send(user))
+  .then((user) => res.send(user))
   .catch((err) => {
     if (err.name === 'CastError') {
       next(new NotFoundError('Пользователь с таким id не найден.'));
