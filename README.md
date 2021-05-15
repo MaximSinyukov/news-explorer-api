@@ -5,11 +5,7 @@
   <img alt="Author" src="https://img.shields.io/badge/author-MaximSinyukov-blue" />
 </p>
 
-**Сервер с API расположен по адресу - https://api.masin.students.nomoreparties.xyz**
-
 **Фронтенд часть проекта: [NewsExplorer Front-end](https://github.com/MaximSinyukov/news-explorer-frontend)**
-
-**Демонстрация полного проекта на [Яндекс.Облако](https://cloud.yandex.ru/): [NewsExplorer](https://masin.students.nomoreparties.xyz/)**
 
 ## :page_with_curl: Суть проекта
 
